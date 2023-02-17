@@ -1,6 +1,6 @@
 package br.unitins.resource;
 
-import br.unitins.model.Pessoa;
+import br.unitins.model.Professor;
 
 
 import java.util.List;
@@ -15,14 +15,17 @@ import javax.ws.rs.core.MediaType;
 
 
 
-@Path("/pessoa")
-public class PessoaResource {
+@Path("/professor")
+public class ProfessorResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Pessoa test(){
-        Pessoa p = new Pessoa();
-        p.setNome("Joao Carlos");
-        p.setIdade(20);
+    public Professor test(){
+        Professor p = new Professor();
+        p.setNome("Pereira");
+        p.setIdade(49);
+        p.setDisciplina("Matematica");
+        p.setMatricula(123);
+        p.setAnoinicio(2000);
        
         return p;
 
@@ -31,9 +34,9 @@ public class PessoaResource {
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public List <Pessoa> getALL(){
+    public List <Professor> getALL(){
 
-        return Pessoa.findAll().list();
+        return Professor.findAll().list();
 
     }
 
@@ -41,9 +44,9 @@ public class PessoaResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public Pessoa insert(Pessoa pessoa){
-        pessoa.persist();
-        return pessoa;
+    public Professor insert(Professor prof){
+        prof.persist();
+        return prof;
     }
     
 }
