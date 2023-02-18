@@ -5,6 +5,8 @@ import br.unitins.model.Professor;
 
 import java.util.List;
 
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -19,20 +21,22 @@ import javax.ws.rs.core.MediaType;
 public class ProfessorResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Professor test(){
+    public Professor Prof1(){
+
         Professor p = new Professor();
+
         p.setNome("Pereira");
         p.setIdade(49);
         p.setDisciplina("Matematica");
         p.setMatricula(123);
         p.setAnoinicio(2000);
+
        
         return p;
-
     }
-
+    
     @GET
-    @Path("/all")
+    @Path("/todos")
     @Produces(MediaType.APPLICATION_JSON)
     public List <Professor> getALL(){
 

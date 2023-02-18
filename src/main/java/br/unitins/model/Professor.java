@@ -51,6 +51,6 @@ public class Professor extends PanacheEntity {
     public void setAnoinicio(int anoinicio) {
         this.anoinicio = anoinicio;
     }
+  }
 
-    
-}
+
