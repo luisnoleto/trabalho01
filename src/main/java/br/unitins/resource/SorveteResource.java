@@ -100,26 +100,12 @@ public class SorveteResource{
         return entity;
     }
     
-    //@GET
-    //@Path("nomesabor/{sabor}")
-    //public Response getbysabor(@PathParam("sabor") String sabor) {
-      //  SorveteRepository SorveteRepository = new SorveteRepository();
-      //  List<Sorvete> sorvetes = SorveteRepository.list("LOWER(sabores) like LOWER(?1)" + sabor.toLowerCase() + "%");
-       // return Response.ok(sorvetes).build();
-   // }
-   @GET
+    @GET
     @Path("nomesabor/{sabor}")
     public Response getbysabor(@PathParam("sabor") String sabor) {
-    SorveteRepository sorveteRepository = new SorveteRepository();
-    List<Sorvete> sorvetes = sorveteRepository.list("LOWER(sabores) like LOWER(?1) and LOWER(sabores) like LOWER(?2)", sabor.substring(0, 1) + "%", "%" + sabor.toLowerCase() + "%");
-    
-    return Response.ok(sorvetes).build();
-}
-
-    
-
-    
-
-
-
+          SorveteRepository SorveteRepository = new SorveteRepository();
+          List<Sorvete> sorvetes = SorveteRepository.list("LOWER(sabores) like LOWER(?1)", sabor.toLowerCase() + "%");
+        return Response.ok(sorvetes).build();
+    }
+  
 }
