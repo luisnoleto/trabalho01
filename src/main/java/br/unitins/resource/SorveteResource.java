@@ -1,8 +1,8 @@
 package br.unitins.resource;
 import br.unitins.model.Sorvete;
+import br.unitins.repository.SorveteRepository;
 
 import java.util.List;
-
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -13,14 +13,22 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import br.unitins.model.Sorvete;
+import javax.ws.rs.core.Response;
+import javax.inject.Inject;
+
+
 
 @Path("/sorvete")
-public class SorveteResource {
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+public class SorveteResource{
+
+    @Inject
+    SorveteRepository repository;
 
     @GET
     public List<Sorvete> getAll() {
-        return Sorvete.findAll().list();
+        return repository.findAll().list();
     }
 
     @PUT
@@ -29,7 +37,8 @@ public class SorveteResource {
     @Produces(MediaType.APPLICATION_JSON)//formato de retorno do dado
     @Transactional 
     public Sorvete update(@PathParam("id") Long id, Sorvete sorvete) {
-        Sorvete entity = Sorvete.findById(id);
+        Sorvete entity = repository.findById(id);
+
         entity.setSabores(sorvete.getSabores());
         entity.setPrecosabor(sorvete.getPrecosabor());
 
@@ -37,10 +46,16 @@ public class SorveteResource {
     }
 
     @GET
+    @Path("/quantidade")
+    public long count(){
+        return repository.count();
+    }
+
+    @GET
     @Path("/{id}")
     public Sorvete getSorveteId (@PathParam("id") Long id){
-      
-        return Sorvete.findById(id);
+      SorveteRepository SorveteRepository = new SorveteRepository();
+        return SorveteRepository.findById(id);
 
     }
 
@@ -50,45 +65,60 @@ public class SorveteResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Sorvete delete(@PathParam("id") Long id) {
-        Sorvete entity = Sorvete.findById(id);
-        entity.delete();
-        return entity;
+       SorveteRepository sorveteRepository = new SorveteRepository();
+        Sorvete sorvete = sorveteRepository.findById(id);
+        sorveteRepository.delete(sorvete);
+        return sorvete;
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Sorvete create(Sorvete sorvete) {
-        sorvete.persist();
+    public Sorvete insert(Sorvete sorvete) {
+        if (sorvete.getId() != null) {
+            repository.persist(sorvete);
+        }
+        else {
+            repository.persistAndFlush(sorvete);
+        }
         return sorvete;
+            
+            
     }
 
     @PUT
-    @Path("/sabores/{sabores}")
+    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    //update de sabor e preço
-    public Sorvete updateSabor(@PathParam("sabores") String sabores, Sorvete sorvete) {
-        Sorvete entity = Sorvete.find("sabores", sabores).firstResult();
+    public Sorvete updateSabor(@PathParam("id") Long id, Sorvete sorvete) {
+        Sorvete entity = repository.findById(id);
         entity.setSabores(sorvete.getSabores());
         entity.setPrecosabor(sorvete.getPrecosabor());
 
         return entity;
     }
-    @PUT
-    @Path("/sabores/{sabores}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
-    //update de preco
-    public Sorvete updatePreco(@PathParam("precosabor") String precosabor, Sorvete sorvete) {
-        Sorvete entity = Sorvete.find("precosabor", precosabor).firstResult();
-        entity.setPrecosabor(sorvete.getPrecosabor());
+    
+    //@GET
+    //@Path("nomesabor/{sabor}")
+    //public Response getbysabor(@PathParam("sabor") String sabor) {
+      //  SorveteRepository SorveteRepository = new SorveteRepository();
+      //  List<Sorvete> sorvetes = SorveteRepository.list("LOWER(sabores) like LOWER(?1)" + sabor.toLowerCase() + "%");
+       // return Response.ok(sorvetes).build();
+   // }
+   @GET
+    @Path("nomesabor/{sabor}")
+    public Response getbysabor(@PathParam("sabor") String sabor) {
+    SorveteRepository sorveteRepository = new SorveteRepository();
+    List<Sorvete> sorvetes = sorveteRepository.list("LOWER(sabores) like LOWER(?1) and LOWER(sabores) like LOWER(?2)", sabor.substring(0, 1) + "%", "%" + sabor.toLowerCase() + "%");
+    
+    return Response.ok(sorvetes).build();
+}
 
-        return entity;
-    }
+    
+
+    
 
 
 

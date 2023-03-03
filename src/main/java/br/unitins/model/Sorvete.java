@@ -1,22 +1,25 @@
 package br.unitins.model;
 
 import javax.persistence.Entity;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-
-import javax.persistence.Entity;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import java.util.List;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-
 @Entity
-public class Sorvete extends PanacheEntity {
+public class Sorvete{
 
-    //@Id
-    //private Integer id;
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(length = 50, nullable = false)
     private String sabores;
-    private float precosabor;
+
+    @Column(length = 4, nullable = false)
+    private String precosabor;
+    
 
     public String getSabores() {
         return sabores;
@@ -26,11 +29,18 @@ public class Sorvete extends PanacheEntity {
         this.sabores = sabores;
     }
 
-    public float getPrecosabor() {
+    public String getPrecosabor() {
         return precosabor;
     }
 
-    public void setPrecosabor(float precosabor) {
+    public void setPrecosabor(String precosabor) {
         this.precosabor = precosabor;
+    }
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 }

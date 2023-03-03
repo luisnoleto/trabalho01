@@ -4,6 +4,14 @@
 -- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-2');
 -- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-3');
 
-insert into sorvete (id, sabores, precosabor) values(nextval('hibernate_sequence'), 'Chocolate', 4.00);
-insert into sorvete (id, sabores, precosabor) values(nextval('hibernate_sequence'), 'Baunilia', 3.50);
-insert into sorvete (id, sabores, precosabor) values(nextval('hibernate_sequence'), 'Morango', 4.50);
+insert into sorvete (sabores, precosabor) values('Chocolate', '4.00');
+insert into sorvete (sabores, precosabor) values('Baunilia', '3.50');
+insert into sorvete (sabores, precosabor) values('Morango', '4.50');
+insert into sorvete (sabores, precosabor) values('Limão', '3.50');
+insert into sorvete (sabores, precosabor) values('Flocos', '4.50');
+insert into sorvete (sabores, precosabor) values('Menta', '5.50');
+insert into sorvete (sabores, precosabor) values('Banana', '3.50');
+insert into sorvete (sabores, precosabor) values('Cereja', '4.50');
+insert into sorvete (sabores, precosabor) values('Beijinho', '4.00');
+insert into sorvete (sabores, precosabor) values('Laranja', '3.80');
+insert into sorvete (sabores, precosabor) values('Ferreiro Rocher', '7.50');
