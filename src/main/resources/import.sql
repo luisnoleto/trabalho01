@@ -13,10 +13,16 @@ insert into sorvete (sabores, precosabor) values('Menta', '5.50');
 insert into sorvete (sabores, precosabor) values('Banana', '3.50');
 insert into sorvete (sabores, precosabor) values('Cereja', '4.50');
 insert into sorvete (sabores, precosabor) values('Beijinho', '4.00');
-insert into sorvete (sabores, precosabor) values('Laranja', '3.80');
 insert into sorvete (sabores, precosabor) values('Ferreiro Rocher', '7.50');
 
 
-INSERT into cobertura (coberturas) values('Chocolate');
-INSERT into cobertura (coberturas) values('Kiwi');
-INSERT into cobertura (coberturas) values('Morango');
+INSERT into cobertura (id_sorvete, coberturas) values(1, 'Chocolate');
+INSERT into cobertura (id_sorvete, coberturas) values(2, 'Creme');
+INSERT into cobertura (id_sorvete, coberturas) values(3, 'Morango');
+INSERT into cobertura (id_sorvete, coberturas) values(4, 'Limão');
+INSERT into cobertura (id_sorvete, coberturas) values(5, 'Chocolate Meio-Amargo');
+INSERT into cobertura (id_sorvete, coberturas) values(6, 'Menta');
+INSERT into cobertura (id_sorvete, coberturas) values(7, 'Banana');
+INSERT into cobertura (id_sorvete, coberturas) values(8, 'Cereja');
+INSERT into cobertura (id_sorvete, coberturas) values(9, 'Chocolate Branco');
+INSERT into cobertura (id_sorvete, coberturas) values(10, 'Chocolate ao Leite');

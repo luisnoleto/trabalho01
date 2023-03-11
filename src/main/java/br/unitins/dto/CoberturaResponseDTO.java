@@ -18,12 +18,14 @@ public class CoberturaResponseDTO {
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getCoberturas() {
         return coberturas;
     }
     public void setCoberturas(String coberturas) {
         this.coberturas = coberturas;
     }
+    
     public Map<String, Object> getSorvete() {
         return sorvete;
     }

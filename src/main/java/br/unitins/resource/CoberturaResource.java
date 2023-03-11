@@ -3,8 +3,11 @@ import br.unitins.dto.CoberturaDTO;
 import br.unitins.dto.CoberturaResponseDTO;
 import br.unitins.model.Cobertura;
 import br.unitins.repository.CoberturaRepository;
+import br.unitins.repository.SorveteRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -28,10 +31,17 @@ public class CoberturaResource{
     @Inject
     CoberturaRepository repository;
 
-    @GET
-    public List<Cobertura> getAll() {
+    @Inject
+    SorveteRepository sorveteRepository;
 
-        return repository.findAll().list();
+    @GET
+    public List<CoberturaResponseDTO> getAll() {
+
+        return repository.findAll()
+        .stream()
+        .map(cobertura -> new CoberturaResponseDTO(cobertura))
+        .collect(Collectors.toList());
+        
     }
 
     @PUT
@@ -79,12 +89,17 @@ public class CoberturaResource{
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public CoberturaResponseDTO insert(CoberturaDTO dto) {
+
        Cobertura entity = new Cobertura();
+
         entity.setCoberturas(dto.getCoberturas());
+        entity.setSorvete(sorveteRepository.findByID(dto.getIdSorvete()));
 
         repository.persist(entity);
 
         return new CoberturaResponseDTO(entity);
+        //response
+        //return Response.status(Status.CREATED).entity(new CoberturaResponseDTO(entity)).build();
             
     }
 

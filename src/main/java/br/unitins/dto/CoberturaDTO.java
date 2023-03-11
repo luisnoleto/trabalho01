@@ -2,16 +2,8 @@ package br.unitins.dto;
 
 
 public class CoberturaDTO {
-    private Long id;
+    private Long idSorvete;
     private String coberturas;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getCoberturas() {
         return coberturas;
@@ -19,5 +11,13 @@ public class CoberturaDTO {
 
     public void setCoberturas(String coberturas) {
         this.coberturas = coberturas;
+    }
+
+    public Long getIdSorvete() {
+        return idSorvete;
+    }
+
+    public void setIdSorvete(Long idSorvete) {
+        this.idSorvete = idSorvete;
     }
 }

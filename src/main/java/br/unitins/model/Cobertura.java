@@ -32,11 +32,13 @@ public class Cobertura{
     public void setId(Long id) {
         this.id = id;
     }
+    
     @ManyToOne
     @JoinColumn(name = "id_sorvete")
     private Sorvete sorvete;
 
     public Sorvete getSorvete() {
+
         return sorvete;
     }
     public void setSorvete(Sorvete sorvete) {

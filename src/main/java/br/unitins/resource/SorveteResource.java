@@ -76,12 +76,9 @@ public class SorveteResource{
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
     public Sorvete insert(Sorvete sorvete) {
-        if (sorvete.getId() != null) {
-            repository.persist(sorvete);
-        }
-        else {
-            repository.persistAndFlush(sorvete);
-        }
+
+        repository.persist(sorvete);
+        
         return sorvete;
             
             
