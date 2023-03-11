@@ -15,3 +15,8 @@ insert into sorvete (sabores, precosabor) values('Cereja', '4.50');
 insert into sorvete (sabores, precosabor) values('Beijinho', '4.00');
 insert into sorvete (sabores, precosabor) values('Laranja', '3.80');
 insert into sorvete (sabores, precosabor) values('Ferreiro Rocher', '7.50');
+
+
+INSERT into cobertura (coberturas) values('Chocolate');
+INSERT into cobertura (coberturas) values('Kiwi');
+INSERT into cobertura (coberturas) values('Morango');
