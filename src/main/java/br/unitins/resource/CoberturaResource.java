@@ -4,9 +4,11 @@ import br.unitins.dto.CoberturaResponseDTO;
 import br.unitins.model.Cobertura;
 import br.unitins.repository.CoberturaRepository;
 import br.unitins.repository.SorveteRepository;
+import br.unitins.service.ServiceCobertura;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
@@ -19,7 +21,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 
 
@@ -29,99 +33,53 @@ import javax.inject.Inject;
 public class CoberturaResource{
 
     @Inject
-    CoberturaRepository repository;
-
-    @Inject
-    SorveteRepository sorveteRepository;
+    ServiceCobertura serviceCobertura;
 
     @GET
     public List<CoberturaResponseDTO> getAll() {
-
-        return repository.findAll()
-        .stream()
-        .map(cobertura -> new CoberturaResponseDTO(cobertura))
-        .collect(Collectors.toList());
-        
+        return serviceCobertura.getAll();        
     }
 
     @PUT
-    @Path("/{id}") //precisa das chaves
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)//formato de retorno do dado
-    @Transactional 
-    public Cobertura update(@PathParam("id") Long id, Cobertura cobertura) {
-        Cobertura entity = repository.findById(id);
-
-        entity.setCoberturas(cobertura.getCoberturas());
-        
-
-        return entity;
-    }
+    @Path("/{id}")
+    public Response update(@PathParam("id") Long id, CoberturaDTO dto) {
+      CoberturaResponseDTO entity = serviceCobertura.update(id, dto);
+      return Response.ok(entity).build();
+  }
 
     @GET
     @Path("/quantidade")
     public long count(){
-        return repository.count();
+        return serviceCobertura.count();
     }
 
     @GET
     @Path("/{id}")
-    public Cobertura getCoberturaId (@PathParam("id") Long id){
-        CoberturaRepository coberturaRepository = new CoberturaRepository();
-        return coberturaRepository.findById(id);
-
+    public CoberturaResponseDTO findById(@PathParam("id") Long id) {
+        return serviceCobertura.findById(id);
     }
 
     @DELETE
     @Path("/{id}")
     @Transactional
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Cobertura delete(@PathParam("id") Long id) {
-        CoberturaRepository CoberturaRepository = new CoberturaRepository();
-        Cobertura cobertura = CoberturaRepository.findById(id);
-        CoberturaRepository.delete(cobertura);
-        return cobertura;
+    public Response delete(@PathParam("id") Long id) {
+        serviceCobertura.delete(id);
+        return Response.status(Status.NO_CONTENT).build();
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public CoberturaResponseDTO insert(CoberturaDTO dto) {
-
-       Cobertura entity = new Cobertura();
-
-        entity.setCoberturas(dto.getCoberturas());
-        entity.setSorvete(sorveteRepository.findByID(dto.getIdSorvete()));
-
-        repository.persist(entity);
-
-        return new CoberturaResponseDTO(entity);
-        //response
-        //return Response.status(Status.CREATED).entity(new CoberturaResponseDTO(entity)).build();
-            
-    }
-
-
-    @PUT
-    @Path("/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Transactional
-    public Cobertura updateCobertura(@PathParam("id") Long id, Cobertura cobertura) {
-        Cobertura entity = repository.findById(id);
-        entity.setCoberturas(cobertura.getCoberturas());
-
-        return entity;
+    public Response insert(CoberturaDTO dto) {
+        CoberturaResponseDTO entity = serviceCobertura.insert(dto);
+        return Response.status(Response.Status.CREATED).entity(entity).build();       
     }
     
     @GET
     @Path("nomesabor/{cobertura}")
     public Response getbycobertura(@PathParam("cobertura") String cobertura) {
-        CoberturaRepository Repository = new CoberturaRepository();
-        Repository.list("LOWER(coberturas) like LOWER(?1)", cobertura.toLowerCase() + "%");
-        return Response.ok(cobertura).build();
+        CoberturaRepository CRepository = new CoberturaRepository();
+          List<Cobertura> coberturas = CRepository.list("LOWER(coberturas) like LOWER(?1)", cobertura.toLowerCase() + "%");
+        return Response.ok(coberturas).build();
     }
   
 }

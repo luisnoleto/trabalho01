@@ -4,6 +4,7 @@ import br.unitins.repository.SorveteRepository;
 
 import java.util.List;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -75,7 +76,7 @@ public class SorveteResource{
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public Sorvete insert(Sorvete sorvete) {
+    public Sorvete insert(@Valid Sorvete sorvete) {
 
         repository.persist(sorvete);
         
