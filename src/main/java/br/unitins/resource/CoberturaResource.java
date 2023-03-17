@@ -3,12 +3,8 @@ import br.unitins.dto.CoberturaDTO;
 import br.unitins.dto.CoberturaResponseDTO;
 import br.unitins.model.Cobertura;
 import br.unitins.repository.CoberturaRepository;
-import br.unitins.repository.SorveteRepository;
 import br.unitins.service.ServiceCobertura;
-
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
@@ -23,7 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.inject.Inject;
-import javax.validation.Valid;
+
 
 
 

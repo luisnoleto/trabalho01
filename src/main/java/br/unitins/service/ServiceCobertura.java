@@ -2,7 +2,6 @@ package br.unitins.service;
 
 import br.unitins.dto.CoberturaDTO;
 import br.unitins.dto.CoberturaResponseDTO;
-import br.unitins.model.Cobertura;
 import java.util.List;
 
 public interface ServiceCobertura {
